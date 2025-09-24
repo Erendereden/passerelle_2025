@@ -5,14 +5,14 @@ window.onload = () => {
   let cols = 0;
   let currentHue = Math.floor(Math.random() * 360); // Start with a random hue.
   // Constants
-const timeout = 300; //EDIT
-const timeout2 = 500; //EDIT
-const timeout3 = 500; //EDIT
+const timeout = 100; //EDIT
+const timeout2 = 100; //EDIT
+const timeout3 = 100; //EDIT
   const primary = "&nbsp;"; // Initial char.
 // First 
-const center = ['@', '®', '©',]; //EDIT
-const tertiary = ['.', '*', '•', '°']; //EDIT
-const secondary = ['\\', '/', '|', '-', '_','&boxv;','&boxh;','&boxvl;','&boxvl;','&boxhd;','&boxhu;']; //EDIT
+const center = ['1', '0', '1',]; //EDIT
+const tertiary = ['0', '1', '1', '0']; //EDIT
+const secondary = ['1', '0', '1', '0','1','0','1',]; //EDIT
 const max = 2; // First circle around center.
 const max2 = 3; // 2nd circle around center.
 
@@ -69,14 +69,14 @@ const animateItem = (item, char, delay, extraClass) => {
   setTimeout(() => {
     item.innerHTML = char; //Set the text content.
     // Colors.
-    item.style.backgroundColor = `hsla(${currentHue%360}, 100%, 30%, 8)`; //EDIT
-    item.style.color = `hsla(${(currentHue + 180) %360}, 100%, 70%, 1)`;//EDIT
+    item.style.backgroundColor = `hsla(${currentHue}, 100%, 40%, 5)`; //EDIT
+    item.style.color = `hsla(${(currentHue)}, 100%, 90%, 1)`;//EDIT
     item.classList.add(extraClass);
   }, delay);
     // Launch a function with delay to make the end status of the cell.
   setTimeout(() => {
     item.innerHTML = primary; // Get back to the initial char. 
-    item.style.backgroundColor = `hsla(${currentHue%360}, 100%, 50%, 0)`; //EDIT
+    item.style.backgroundColor = `hsla(${currentHue%360}, 100%, 60%, 0)`; //EDIT
     item.classList.remove(extraClass);
   }, delay * 7);
 };

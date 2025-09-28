@@ -9,27 +9,26 @@
         <div class="container">
             <div class="settings item">
                 <h2>Settings</h2>
+                
+                <label for="Name"> Name </label>
+                <input type="text" id="Name" width="40" value=""/><br/>
+                <button id="userBtn">Add</button><br/>
                 <label for="nb">Number of words</label>
                 <input type="number" id="nb" width="40" max="10" min="1"/><br/>
                 <label for="len">Length of words</label>
                 <input type="number" id="len" width="40" max="10" min="2"/><br/>
                 <div id="languages">
-                    <label for="de">Deutsch</label>
-                    <input type="radio" value="de" id="de" name="lang" checked/><br/>
-                    <label for="fr">French</label>
-                    <input type="radio" value="fr" name="lang"/><br/>
-
-                    <label for="en">English</label>
-                    <input type="radio" value="en" name="lang"/><br/>
-
-                    <label for="zh">Chinese</label>
-                    <input type="radio" value="zh" name="lang"/><br/>
+                    
                 </div>
 
             </div>
             <div class="item">
                 <p id="timer">time: 0.00s</p>
-                <button id="startgame">Start</button><br/>
+                <div class="button-row">
+                    <button id="startgame">Start</button><br/>
+                    <button id="stopgame">Stop</button><br/>
+                </div>
+
                 <p contenteditable="true" type="textarea" id="typedword">&nbsp;</p>
                 <p id="randomword">&nbsp;</p>
             </div>

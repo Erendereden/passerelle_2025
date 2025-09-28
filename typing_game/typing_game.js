@@ -29,17 +29,25 @@ this.onload = async ()=>{
     /**
      * get the HTML elements
      */
+<<<<<<< Updated upstream
     const lng = await languages();
         console.log(lng);
 
+=======
+    const allUsernames = []
+    const nameInput = document.getElementById("Name");
+    const languagesContainer = document.getElementById("languages");
+>>>>>>> Stashed changes
     const randomWordP = document.querySelector('#randomword');// get the html element for randWord
     const timerP = document.querySelector("#timer");// get the timer P element
     const startBtn = document.querySelector('#startgame');// start button
+    const stopBtn = document.querySelector('#stopgame');// stop button
     const allRecordsOL = document.querySelector('#allRecords'); // list of records
     const nbWordInput = document.querySelector("#nb");
     const lengthInput = document.querySelector("#len");//==> EXPLAIN THIS LINE OF CODE
     const typeWordP = document.querySelector('#typedword');// get the html element for user typed
     // Add an event listener to listen to keyboard type.
+<<<<<<< Updated upstream
     typeWordP.addEventListener('input',onInput);
     startBtn.addEventListener('click',startGame); // listen to click on start button
     document.addEventListener('keydown', (event) => {
@@ -55,9 +63,101 @@ this.onload = async ()=>{
                 // Delete or backspace.
                 console.log('keydown');
                 onInput(null);
+=======
+
+    allUsernames.addEventListener
+    const userNamesBtn = document.getElementById("userBtn");
+    userNamesBtn.addEventListener('click', () =>{
+        if (nameInput.value && !allUsernames.includes(nameInput.value)) {
+            allUsernames.push(nameInput.value);
+            const option = document.createElement("option");
+            option.value = nameInput.value;
+            document.getElementById("usernames").appendChild(option);
+            // Save to localStorage
+            let oldNames = JSON.parse(localStorage.getItem("oldNames") || "[]");
+            if (!oldNames.includes(nameInput.value)) {
+                oldNames.push(nameInput.value);
+                localStorage.setItem("oldNames", JSON.stringify(oldNames));
             }
         }
     });
+    let langs = [];
+    getLanguages().then((data)=>{
+        // Only when we got the languages can we start the Game.
+        langs = data;
+        console.log(langs);
+        /*************************************************************
+         * HERE WE NEED TO CREATE THE RADIO BUTTONS AND ADD TO THE PAGE.
+         **********************************************************/
+        createLanguageButtons(langs); // Add the radios to the page
+        typeWordP.addEventListener('input',onInput);
+        startBtn.addEventListener('click',startGame); // listen to click on start button
+        stopBtn.addEventListener('click',stopGame);
+        document.addEventListener('keydown', (event) => {
+            const keyTyped = event.key;
+            if (keyTyped === "Dead") {
+                // Trick for ô style double strokes.
+                lastWasDead = true;
+            } else {
+                lastWasDead = false;
+                if(keyTyped === "Enter"){
+                    startGame();
+                } else if (timerRecorded > 0 && (event.key === 'Backspace' || event.key === 'Delete')) {
+                    // Delete or backspace.
+                    console.log('keydown');
+                    onInput(null);
+                }
+>>>>>>> Stashed changes
+            }
+        }
+    });
+<<<<<<< Updated upstream
+=======
+    /**
+     * Add the radios to the page.
+     * @param {array} langs 
+     */
+    const createLanguageButtons = (langs)=>{
+        addRadioElement("en", false);
+        let first = true;  
+        for (let i=0; i<langs.length; i++) {
+            const lang = langs[i];
+            console.log(langs[i]);
+            const label = document.createElement("label");
+            label.setAttribute("for", lang);
+            label.textContent = lang;
+            
+            const input = document.createElement("input");
+            input.setAttribute("type", "radio");
+            input.setAttribute("value", lang);
+            input.setAttribute("id", lang);
+            input.setAttribute("name", "lang");
+            if (first) {
+            input.checked = true;
+            first = false;
+            }
+            languagesContainer.appendChild(label);
+            languagesContainer.appendChild(input);
+            languagesContainer.appendChild(document.createElement("br"));
+        }   
+    }
+    const addRadioElement = (lang, first )=>{
+        const label = document.createElement("label");
+            label.setAttribute("for", lang);
+            label.textContent = lang;
+            
+            const input = document.createElement("input");
+            input.setAttribute("type", "radio");
+            input.setAttribute("value", lang);
+            input.setAttribute("id", lang);
+            input.setAttribute("name", "lang");
+            input.checked = first;
+            languagesContainer.appendChild(label);
+            languagesContainer.appendChild(input);
+            languagesContainer.appendChild(document.createElement("br"));
+    }
+
+>>>>>>> Stashed changes
     async function startGame(){
         clearInterval(intervalID); // Reset the interval loop
         // Get language
@@ -77,7 +177,33 @@ this.onload = async ()=>{
         // Oppposite is call blur.
         typeWordP.focus();
     }
+<<<<<<< Updated upstream
 
+=======
+    async function stopGame(){
+        clearInterval(intervalID); // Reset the interval loop
+        // Get language
+        const langInput = document.querySelector("[name='lang']:checked");
+        // Fetch the random from the API.
+        randomWords = await getRandomWord(lengthInput.value, nbWordInput.value, langInput.value);
+        randomWordP.textContent = randomWords; // put the random word in the P element
+        // Resetting 
+        typeWordP.innerHTML = typeWordP.value = "";
+        timerRecorded = startTime = 0; // Init times.
+        // Start the timer.
+        intervalID = setInterval(0);
+        // Stop blinking
+        timerP.classList.remove('blink');
+        randomWordP.classList.remove('blink');
+        // Putting the ouse caret in the text box.
+        // Oppposite is call blur.
+        typeWordP.focus();
+    }
+    /**
+     * ==> EXPLAIN what the function startGame() does
+     * @return void
+     */
+>>>>>>> Stashed changes
     function updateTimer(){
         timerRecorded = (startTime++/100).toFixed(2);
         timerP.textContent = "time:" + timerRecorded;
@@ -130,12 +256,12 @@ this.onload = async ()=>{
             typeWordP.blur();
             timerP.setAttribute("class","blink");
             randomWordP.classList.add("blink");
-            allRecords.push( {time: timerRecorded, word:typed });
+            allRecords.push( {time: timerRecorded, word:typed, name: nameInput.value} );
             allRecords.sort((a, b) => a.time - b.time);
             allRecordsOL.innerHTML = "";
             allRecords.forEach(element => {
                 const li = document.createElement("li");
-                li.textContent = `${element.time}s (${element.word})`;
+                li.textContent = `${element.time}s (${element.word}) - ${element.name}`;
                 allRecordsOL.appendChild(li);
             });
             timerRecorded = startTime = 0;
